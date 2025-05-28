@@ -30,3 +30,18 @@ ul.addEventListener("click",function(event){
         //par.remove();
    // });
 //}
+// Persist tasks in localStorage
+function saveTasks() {
+    const tasks = [];
+    document.querySelectorAll("#task-list li").forEach(li => {
+        tasks.push({ text: li.firstChild.textContent, done: li.classList.contains("done") });
+    });
+    localStorage.setItem("tasks", JSON.stringify(tasks));
+}
+
+function loadTasks() {
+    const saved = JSON.parse(localStorage.getItem("tasks") || "[]");
+    saved.forEach(task => addTask(task.text, task.done));
+}
+
+document.addEventListener("DOMContentLoaded", loadTasks);
